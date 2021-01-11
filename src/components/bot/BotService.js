@@ -1,18 +1,33 @@
 const axios = require('axios');
-const csvParse = require('csv-parse')
+const parse = require('csv-parse/lib/sync');
 
 const processCommand = async(stockCode) => {
-   axios.get(`https://stooq.com/q/l/?s=${stockCode}&f=sd2t2ohlcv&h&e=csv`)
-  .then(function (response) {
-    // handle success
-    const parsed = csvParse(response.data);
-    console.log(parsed)
-    return parsed;
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  });
+   try {
+    const apiResponse = await axios.get(`https://stooq.com/q/l/?s=${stockCode}&f=sd2t2ohlcv&h&e=csv`);
+
+    const apiParsedResponse = parse(apiResponse.data, {
+      columns: true,
+      skip_empty_lines: true
+    })
+
+    return formatMessage(apiParsedResponse);
+
+   } catch(e) {
+     throw new Error(e);
+   }
+  
+}
+
+function formatMessage(apiParsedResponse) {
+  const stockTicker = apiParsedResponse[0].Symbol;
+  const closePrice = apiParsedResponse[0].Close;
+
+  if (closePrice === 'N/D') {
+    return null; 
+  } 
+  else {
+    return `${stockTicker} quote is $${closePrice} per share`;
+  }
 }
 
 module.exports = {

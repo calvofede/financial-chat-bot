@@ -2,10 +2,13 @@ const BotService = require('./BotService');
 
 const getCommand = async(req, res, next) => {
     try {
-        //TODO validar command
-        // string substring (=)
-        const response = await BotService.processCommand(req.query.stockCode);
-        res.send(response);
+        const response = await BotService.processCommand(req.params.stock);
+
+        if (!response) {
+            res.status(404).send({ error: "Empty data. Not valid request" });
+        } else {
+            res.json({commandResponse: response});
+        }
         next();
     } catch(e) {
         console.error(e);
