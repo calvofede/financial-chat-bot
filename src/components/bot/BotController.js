@@ -1,5 +1,5 @@
 const BotService = require('./BotService');
-const { Producer } = require('./../../utils/KafkaProducer'); 
+const { Producer } = require('../../utils/MessageBrokerProducer'); 
 
 const getCommand = async(req, res, next) => {
     try {

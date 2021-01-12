@@ -1,6 +1,6 @@
 const axios = require('axios');
 const parse = require('csv-parse/lib/sync');
-const { Producer } = require('./../../utils/KafkaProducer');
+const { Producer } = require('../../utils/MessageBrokerProducer');
 
 const processCommand = async(stockCode) => {
    try {
@@ -9,11 +9,11 @@ const processCommand = async(stockCode) => {
     const apiParsedResponse = parse(apiResponse.data, {
       columns: true,
       skip_empty_lines: true
-    })
+    });
 
     const finalResponse = formatMessage(apiParsedResponse);
 
-    Producer.sendMessage('chatbot', finalResponse);
+    Producer.sendMessage(process.env.MESSAGE_BROKER_STOCKS_TOPIC, finalResponse);
 
     return finalResponse;
 

@@ -1,5 +1,4 @@
 const kafka = require('kafka-node');
-const topic = 'chatbot';
 
 Kafka = module.exports;
 let producer;
@@ -8,7 +7,7 @@ const getProducer = () => {
   if (producer) return producer;
 
   const Producer = kafka.Producer;
-  const client = new kafka.KafkaClient({kafkaHost: 'localhost:9092'});
+  const client = new kafka.KafkaClient({kafkaHost: process.env.MESSAGE_BROKER_HOST});
   const _producer = new Producer(client);
 
   _producer.on('ready', () => {
@@ -27,11 +26,11 @@ const getProducer = () => {
   return producer;
 };
 
-const retryProduce = (topicName = topic, bufferedMessage) => {
+const retryProduce = (topic, bufferedMessage) => {
   try {
     let payloads = [
       {
-        topic: topicName,
+        topic: topic,
         messages: bufferedMessage
       }
     ];
@@ -54,10 +53,9 @@ Kafka.Producer = {
       : message.toString();
 
     const bufferedMessage = Buffer.from(messageParsed);
-    const topicName = `${topic}`;
 
     try {
-      retryProduce(topicName, bufferedMessage);
+      retryProduce(topic, bufferedMessage);
     } catch (err) {
       console.log(`Error on sendMessage: ${err}`);
     }
