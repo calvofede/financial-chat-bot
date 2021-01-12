@@ -15,6 +15,8 @@ const processCommand = async(stockCode) => {
 
     Producer.sendMessage('chatbot', finalResponse);
 
+    return finalResponse;
+
    } catch(e) {
      throw new Error(e);
    }
