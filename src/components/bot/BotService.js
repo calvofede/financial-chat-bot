@@ -1,5 +1,6 @@
 const axios = require('axios');
 const parse = require('csv-parse/lib/sync');
+const { Producer } = require('./../../utils/KafkaProducer');
 
 const processCommand = async(stockCode) => {
    try {
@@ -10,7 +11,9 @@ const processCommand = async(stockCode) => {
       skip_empty_lines: true
     })
 
-    return formatMessage(apiParsedResponse);
+    const finalResponse = formatMessage(apiParsedResponse);
+
+    Producer.sendMessage('chatbot', finalResponse);
 
    } catch(e) {
      throw new Error(e);

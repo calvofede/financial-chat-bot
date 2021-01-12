@@ -63,5 +63,3 @@ Kafka.Producer = {
     }
   },
 };
-
-Kafka.Producer.sendMessage('chatbot', { a : 1 , b : 2})
