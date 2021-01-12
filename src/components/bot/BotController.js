@@ -1,4 +1,5 @@
 const BotService = require('./BotService');
+const { Producer } = require('./../../utils/KafkaProducer'); 
 
 const getCommand = async(req, res, next) => {
     try {
@@ -15,6 +16,8 @@ const getCommand = async(req, res, next) => {
         res.sendStatus(500) && next(e);
     }
 }
+
+Producer.start();
 
 module.exports = {
     getCommand
