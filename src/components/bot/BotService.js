@@ -28,7 +28,7 @@ function formatMessage(apiParsedResponse) {
   const closePrice = apiParsedResponse[0].Close;
 
   if (closePrice === 'N/D') {
-    return null; 
+    return `Sorry, unable to find stock information of ${stockTicker}`; 
   } 
   else {
     return `${stockTicker} quote is $${closePrice} per share`;
