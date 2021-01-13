@@ -33,3 +33,9 @@ If kafka image is running fine this app should show by console
 ```
 Kafka producer connection is ready
 ```
+
+Example request
+```
+GET
+localhost:3001/command/info/stock/aapl.us
+```
