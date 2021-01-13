@@ -28,3 +28,8 @@ $ cd ../financial-chat-bot
 $ npm install
 $ npm start
 ```
+
+If kafka image is running fine this app should show by console
+```
+Kafka producer connection is ready
+```
