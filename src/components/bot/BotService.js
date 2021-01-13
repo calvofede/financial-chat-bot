@@ -12,13 +12,13 @@ const processCommand = async(stockCode) => {
     });
 
     const finalResponse = formatMessage(apiParsedResponse);
-
+    
     Producer.sendMessage(process.env.MESSAGE_BROKER_STOCKS_TOPIC, finalResponse);
 
     return finalResponse;
 
    } catch(e) {
-     throw new Error(e);
+      throw new Error(e);
    }
   
 }
