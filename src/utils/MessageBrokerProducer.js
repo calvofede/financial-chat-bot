@@ -36,7 +36,6 @@ const retryProduce = (topic, bufferedMessage) => {
     ];
     getProducer().send(payloads, function (error, data) {
       if (error) console.log('Error', error);
-      if (data) console.log(data);
     });
   } catch (err) {
     console.log(err);

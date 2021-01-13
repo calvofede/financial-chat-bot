@@ -1,23 +1,30 @@
 ## Table of contents
 * [General info](#general-info)
-* [Technologies](#technologies)
+* [Dependencies](#Dependencies)
 * [Setup](#setup)
 
 ## General info
 Small app that received stock codes (tickers) and return close price
 	
-## Technologies
+## Dependencies
 Project is created with:
 * Express: 4
 * Kafka
-* Csv-parse
 
 ## Setup
+Prior to run this app we need to have Kafka container running since
+this app will be the producer.
+
+To run docker kafka image:
+
+```
+docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=localhost --env ADVERTISED_PORT=9092 spotify/kafka
+```
+
 To run this project, install it locally using npm:
 
 ```
-$ cd ../jobsity-financial-bot
+$ cd ../financial-chat-bot
 $ npm install
 $ npm start
 ```
-This app will be the producer of messages with topic 'chatbot'
